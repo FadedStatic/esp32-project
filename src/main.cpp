@@ -7,21 +7,21 @@
 #pragma pack(push, 1)  // Save previous alignment and set byte alignment
 
 enum pin_resolving : std::uint8_t {
-  START = 36, // these two pins are designated input-only
+  START = 34, // these two pins are designated input-only
   GUITAR = 39, // not a waste
-  POTENTIOMETER = 35,
+  POTENTIOMETER = 36,
   RED_1 = 25,
   GREEN_1 = 33,
   BLUE_1 = 32,
-  BLUE_2 = 14,
+  BLUE_2 = 26,
   GREEN_2 = 27,
-  RED_2 = 26,
-  BLUE_3 = 16,
-  GREEN_3 = 12,
-  RED_3 = 13,
-  BLUE_4 = 17,
-  GREEN_4 = 4,
-  RED_4 = 23,
+  RED_2 = 14,
+  BLUE_3 = 12,
+  GREEN_3 = 13,
+  RED_3 = 4,
+  BLUE_4 = 16,
+  GREEN_4 = 17,
+  RED_4 = 22,
   RED_AUX_1 = 18,
   RED_AUX_2 = 21,
   YELLOW_AUX = 19,
@@ -91,6 +91,7 @@ struct phys_event {
 // crazy optimization, it used to be a LOT of containers but I had the idea to flatten it.
 std::vector<phys_event> queue;
 constexpr std::array<event_init,964> event_inits = {
+  //
   event_init{pulse_event{0, 130, RED_AUX_2}},
   {pulse_event{130, 130, RED_AUX_1}},
   {pulse_event{260, 130, RED_AUX_2}},
@@ -1015,6 +1016,9 @@ constexpr std::array<event_init,964> event_inits = {
   {pulse_event{119730, 130, RED_AUX_1}},
   {pulse_event{119860, 130, RED_AUX_2}},
   {pulse_event{119990, 130, RED_AUX_1}},
+
+
+  // AUDIENCE!!
   {pulse_event{7000, 4000, YELLOW_AUX, 10}},
   {pulse_event{11600, 2900, YELLOW_AUX, 10}},
   {pulse_event{15700, 2400, YELLOW_AUX, 10}},
@@ -1172,12 +1176,12 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   delay(10);
-  if (digitalRead(START)) {
+  if (!analogRead(START)) {
     start_sequence();
   }
-  if (digitalRead(GUITAR)) {
+  /*if (digitalRead(GUITAR)) {
     Serial.println(
     "CANCEL!"
     );
-  }
+  }*/
 }
